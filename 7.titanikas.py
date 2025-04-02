@@ -13,49 +13,51 @@ df = pd.read_csv(r'train.csv', index_col=0)
 
 
 average_year = df["Age"].mean()
-print(average_year)
-# print(df)
-df.info()
-
-# df["Age"].fillna(average_year, inplace=True)
-
-# df.fillna("Duomenys neegzistuoja", inplace=True)
+# print(average_year)
 # print(df)
 # df.info()
+
+df["Age"].fillna(average_year, inplace=True)
+
+df.drop("Cabin", axis=1, inplace=True)
+
+df.fillna("Duomenys neegzistuoja", inplace=True)
+# print(df)
+df.info()
 
 
 
 # •Sukurkite bendrą stulpelį susumavę brolius seseris ir tėvus, kad sužinotumėte šeimos dydį, senus stulpelius galite pašalinti (Parchir SibSp).
 
-# df['Family'] = df['SibSp'] + df['Parch']
-# df.drop(['SibSp', 'Parch'], axis=1, inplace=True)
+df['Family'] = df['SibSp'] + df['Parch']
+df.drop(['SibSp', 'Parch'], axis=1, inplace=True)
 # print(df)
 
 
 # •Įsiaiškinkite, ar žmonės keliavo vieni ar ne (naujas stulpelis IsAlone).
 
-# df['IsAlone'] = df['Family'].apply(lambda x: True if x==0 else False)
+df['IsAlone'] = df['Family'].apply(lambda x: True if x==0 else False)
 # print(df)
 
 # •Sukurkite naują stulpelį, kuris sugrupuos asmenis pagal amžių į grupes ( <18 vaikas, < 65 suauges, > 65 senjoras)
 
 
-# def asmenys_pagal_amziu(age):
-#     if age < 18:
-#         return "Vaikas"
-#     elif age > 65:
-#         return "Senjoras"
-#     else:
-#         return "Suauges"
+def asmenys_pagal_amziu(age):
+    if age < 18:
+        return "Vaikas"
+    elif age > 65:
+        return "Senjoras"
+    else:
+        return "Suauges"
 
-# df["Amziaus grupe"] = df["Age"].apply(asmenys_pagal_amziu)
+df["Amziaus grupe"] = df["Age"].apply(asmenys_pagal_amziu)
 # print(df)
 
 
 # •Suskaičiuokite vidutinį kiekvienos klasės keleivių amžių.
 
-# grouped_by_age = df.groupby('Pclass')['Age'].mean()
-# print(grouped_by_age)
+grouped_by_age = df.groupby('Pclass')['Age'].mean()
+print(grouped_by_age)
 
 # •Pamėginkite įsiaiškinti, ar bilieto kaina, turėjo įtakos išgyvenamumui.
 
@@ -65,3 +67,6 @@ df.info()
 # •Pažiūrėkite, kaip koreliuoja vieni stulpeliai su kitais (galite naudoti bibliotekas arba yra net df.corr())
 
 # print(df['Pclass'].corr(df['Fare']))
+grouped_by_jesus = df.groupby('Amziaus grupe')['Survived'].mean()
+print(grouped_by_jesus)
+# print(df['Survived'].corr(df['Amziaus grupe']))

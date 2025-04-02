@@ -64,3 +64,17 @@ plt.show()
 
 # Sukurkite histogramos grafiką, rodantį atsitiktinių sveikųjų skaičių paskirstymą.
 # Instrukcijos: Naudokite sns.histplot ir nustatykite tinkamą binų skaičių.
+
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+import numpy as np
+
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+
+x = np.random.rand(100)
+y = np.random.rand(100)
+z = np.random.rand(100)
+
+ax.scatter(x, y, z)
+plt.show()
